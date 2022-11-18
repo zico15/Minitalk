@@ -6,38 +6,43 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:44:06 by edos-san          #+#    #+#             */
-/*   Updated: 2022/02/17 18:21:28 by edos-san         ###   ########.fr       */
+/*   Updated: 2022/11/18 22:35:06 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MINI_TALK_H
-# define FT_MINI_TALK_H
+#define FT_MINI_TALK_H
 
-# include <signal.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
+#include <signal.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
-typedef int	t_pid;
+typedef int t_pid;
 
-typedef struct s_mensagem
+typedef enum e_type
 {
-	int				index_char;
-	int				index_msg;
-	int				size;
-	t_pid			id_client;
-	unsigned char	c;
-	unsigned char	*msg;
-}	t_mensagem;
+	CLIENT,
+	SERVER
+} t_type;
 
-int			str_to_int(char *v, int n);
-void		send_msg(pid_t id, char *txt);
-int			bity_to_char(int signo, int index);
-int			ft_strlen(char *txt);
-void		send_bity(pid_t id, int v, int len);
-t_mensagem	*get_serve_msg(void);
-int			clean_msg(t_pid	id_client);
-int			ft_printf(const char *txt, ...);
+typedef struct s_data
+{
+	t_type				type;
+	int 				index_char;
+	t_pid 				client;
+	char 				c;
+	char 				*msg;
+	double				progress_vaue;
+	double				progress;
+	double				progress_max;
+	struct sigaction	action;
+} t_data;
+
+int str_to_int(char *v, int n);
+int ft_strlen(char *txt);
+int ft_printf(const char *txt, ...);
+
 #endif
